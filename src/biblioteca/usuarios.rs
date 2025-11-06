@@ -1,8 +1,8 @@
 use std::fmt;
 
+use crate::traits::Identificavel;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use crate::traits::Identificavel;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 
@@ -19,20 +19,20 @@ impl Usuario {
         };
         usuario
     }
+
+    pub fn get_nome(&self) -> String {
+        self.nome.clone()
+    }
 }
 
 impl Identificavel for Usuario {
     fn id(&self) -> Uuid {
         self.id
-    }        
+    }
 }
 
 impl fmt::Display for Usuario {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "Nome: {}",
-            self.nome,
-        )
+        write!(f, "Nome: {}", self.nome,)
     }
 }

@@ -1,10 +1,9 @@
 use std::fmt;
 
-use chrono::{Local, NaiveDate};
+use crate::traits::Identificavel;
+use chrono::{Duration, Local, NaiveDate};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use crate::traits::Identificavel;
-
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 
@@ -20,10 +19,9 @@ pub struct Emprestimo {
     id_livro: Uuid,
     id_usuario: Uuid,
     data_emprestimo: NaiveDate,
-    data_devolucao: Option<NaiveDate>,
-    pub(crate) status: StatusEmprestimo,
+    data_devolucao: NaiveDate,
+    pub status: StatusEmprestimo,
 }
-
 
 impl Emprestimo {
     pub fn new(id_usuario: Uuid, id_livro: Uuid) -> Self {
@@ -32,14 +30,14 @@ impl Emprestimo {
             id_livro: id_livro,
             id_usuario: id_usuario,
             data_emprestimo: Local::now().date_naive(),
-            data_devolucao: None,
+            data_devolucao: Local::now().date_naive() + Duration::days(14),
             status: StatusEmprestimo::Ativo,
         };
         emprestimo
     }
 
-    pub fn set_data_devolucao(&mut self, data: NaiveDate) {
-        self.data_devolucao = Some(data);
+    pub fn get_data_devolucao(&self) -> NaiveDate {
+        self.data_devolucao
     }
 
     pub fn get_id_livro(&self) -> Uuid {
@@ -49,19 +47,12 @@ impl Emprestimo {
     pub fn get_id_usuario(&self) -> Uuid {
         self.id_usuario
     }
-
-    pub fn esta_ativo(&self) -> bool{
-        match self.status {
-            StatusEmprestimo::Ativo => return true,
-            StatusEmprestimo::Devolvido => return false,
-        }
-    }
 }
 
 impl Identificavel for Emprestimo {
     fn id(&self) -> Uuid {
         self.id_emprestimo
-    }        
+    }
 }
 
 impl fmt::Display for Emprestimo {
@@ -72,9 +63,7 @@ impl fmt::Display for Emprestimo {
             self.id_livro,
             self.id_usuario,
             self.data_emprestimo,
-            self.data_devolucao
-                .map(|d| d.to_string())
-                .unwrap_or("Não devolvido".into()),
+            self.data_devolucao,
             match self.status {
                 StatusEmprestimo::Ativo => "Livro emprestado",
                 StatusEmprestimo::Devolvido => "Livro ja devolvido",
