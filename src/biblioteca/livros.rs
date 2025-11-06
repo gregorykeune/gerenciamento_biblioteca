@@ -46,53 +46,57 @@ impl fmt::Display for Livro {
 }
 
 impl Livro {
-    pub fn emprestar(&self, biblioteca: &mut Biblioteca, id_usuario: Uuid) -> Result<(), ErroBiblioteca> {
-        // Verifica se o usuário existe
-        if !biblioteca.usuarios.contains_key(&id_usuario) {
-            return Err(ErroBiblioteca::UsuarioNaoEncontrado(id_usuario));
-        }
-
-        // Verifica se o livro ainda existe na biblioteca
-        if !biblioteca.livros.contains_key(&self.id) {
-            return Err(ErroBiblioteca::LivroNaoEncontrado(self.id()));
-        }
-
-        // Verifica se o livro já está emprestado
-        return match &self.status {
-            StatusLivro::Emprestado => {Err(ErroBiblioteca::EstadoInvalido("Livro já está emprestado! ".to_string()))}
-            StatusLivro::Disponivel => {
-                let novo_emprestimo = Emprestimo::new(self.id, id_usuario);
-                biblioteca.emprestimos.insert(novo_emprestimo.id(), novo_emprestimo);
-                Ok(())
-            }
-        }    
-    }
-
-    pub fn devolver(emprestimo: &mut Emprestimo) -> Result<(), ErroBiblioteca> {
-        return match emprestimo.status {
-            StatusEmprestimo::Devolvido => {
-                Err(ErroBiblioteca::EstadoInvalido("Livro ja está disponivel para emprestimo".to_string()))
-            }
-            StatusEmprestimo::Ativo => {
-                emprestimo.status = StatusEmprestimo::Devolvido;    
-                emprestimo.set_data_devolucao(Local::now().date_naive());
-                Ok(())
-            }
-        }
-    }
-
     pub fn new(titulo: String, autor: String, ano: u16) -> Self {
-        let livro = Livro {
+        Livro {
             id: Uuid::new_v4(),
             titulo,
             autor,
             ano,
             status: StatusLivro::Disponivel,
-        };  
-        livro
+        }
     }
 
-    pub fn get_titulo(self) -> &String {
+    pub fn emprestar(&mut self) -> Result<(), ErroBiblioteca> {
+        match &self.status {
+            StatusLivro::Emprestado => {
+                Err(ErroBiblioteca::EstadoInvalido(
+                    "Livro já está emprestado!".to_string()
+                ))
+            }
+            StatusLivro::Disponivel => {
+                self.status = StatusLivro::Emprestado;
+                Ok(())
+            }
+        }
+    }
+
+    pub fn devolver(&mut self) -> Result<(), ErroBiblioteca> {
+        match self.status {
+            StatusLivro::Disponivel => {
+                Err(ErroBiblioteca::EstadoInvalido(
+                    "Livro já está disponível!".to_string()
+                ))
+            }
+            StatusLivro::Emprestado => {
+                self.status = StatusLivro::Disponivel;
+                Ok(())
+            }
+        }
+    }
+
+    pub fn esta_disponivel(&self) -> bool {
+        matches!(self.status, StatusLivro::Disponivel)
+    }
+
+    pub fn get_titulo(&self) -> &String {
         &self.titulo
+    }
+
+    pub fn get_autor(&self) -> &String {
+        &self.autor
+    }
+
+    pub fn get_ano(&self) -> u16 {
+        self.ano
     }
 }

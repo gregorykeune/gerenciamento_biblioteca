@@ -80,7 +80,7 @@ impl Biblioteca {
         Ok(())
     }
 
-    pub fn adicionar_livro(&mut self) -> Result<(), ErroBiblioteca> {
+    pub fn adicionar_livro(&mut self) -> Result<Uuid, ErroBiblioteca> {
         let titulo = ler_string("Titulo: ".to_string()); 
         let autor = ler_string("Autor: ".to_string()); 
         let ano = ler_u16("Ano: ".to_string()); 
@@ -93,26 +93,26 @@ impl Biblioteca {
     }
 
 
-    pub fn adicionar_usuario(&mut self) -> Result<(), ErroBiblioteca> {
-        let nome = ler_string("Nome: ".to_string());
+ pub fn adicionar_usuario(&mut self) -> Result<Uuid, ErroBiblioteca> {
+    let nome = ler_string("Nome: ".to_string());
+    let usuario = Usuario::new(nome);
+    
+    let id = usuario.id;
+    
+    self.usuarios.insert(id, usuario);
+    Ok(id)
+}
 
-        let usuario = Usuario::new(nome);
-
-        self.usuarios.insert(usuario.id, usuario);
-
-        Ok(())
-    }
-
-    pub fn listar_livros(&self) {
-        if self.livros.is_empty() {
+    pub fn listar_livros(livros: HashMap<Uuid, Livro>) {
+        if livros.is_empty() {
             println!("Nenhum livro cadastrado.");
             return;
         }
 
         println!("\n=== Lista de Livros ===");
-        for (id, livro) in &self.livros {
+        for (id, livro) in livros {
             println!("ID: {}", id);
-            println!("{}", livro); // usa Display de Livro
+            println!("{}", livro); 
             println!("---------------------------");
         }
     }

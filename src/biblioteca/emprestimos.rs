@@ -41,6 +41,21 @@ impl Emprestimo {
     pub fn set_data_devolucao(&mut self, data: NaiveDate) {
         self.data_devolucao = Some(data);
     }
+
+    pub fn get_id_livro(&self) -> Uuid {
+        self.id_livro
+    }
+
+    pub fn get_id_usuario(&self) -> Uuid {
+        self.id_usuario
+    }
+
+    pub fn esta_ativo(&self) -> bool{
+        match self.status {
+            StatusEmprestimo::Ativo => return true,
+            StatusEmprestimo::Devolvido => return false,
+        }
+    }
 }
 
 impl Identificavel for Emprestimo {
