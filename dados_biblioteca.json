@@ -1,0 +1,90 @@
+{
+  "livros": {
+    "e3b88912-5564-465f-a95a-dc0728696e92": {
+      "id": "e3b88912-5564-465f-a95a-dc0728696e92",
+      "titulo": "Tons de magia",
+      "autor": "v. schawab",
+      "ano": 1979,
+      "status": "Disponivel"
+    },
+    "7046b284-7e72-4ad4-9ade-62b614d0dbde": {
+      "id": "7046b284-7e72-4ad4-9ade-62b614d0dbde",
+      "titulo": "Harry Potter e a Pedra Filosofal",
+      "autor": "JK Rowling",
+      "ano": 2000,
+      "status": "Disponivel"
+    },
+    "829c03b6-178b-4198-a9f6-41e54f8ba312": {
+      "id": "829c03b6-178b-4198-a9f6-41e54f8ba312",
+      "titulo": "Sob a redoma",
+      "autor": "Stephen king",
+      "ano": 2001,
+      "status": "Disponivel"
+    },
+    "af957da6-d7eb-4efe-8f7d-26bed53d258d": {
+      "id": "af957da6-d7eb-4efe-8f7d-26bed53d258d",
+      "titulo": "Os miseraveis",
+      "autor": "Victor Hugo",
+      "ano": 1990,
+      "status": "Emprestado"
+    },
+    "64b573f3-7cec-4e73-9162-e7d91cc9b0a9": {
+      "id": "64b573f3-7cec-4e73-9162-e7d91cc9b0a9",
+      "titulo": "Trono de Vidro",
+      "autor": "Sarah j maas",
+      "ano": 1978,
+      "status": "Emprestado"
+    },
+    "f827cb49-6568-4c7c-8483-be15fee635c5": {
+      "id": "f827cb49-6568-4c7c-8483-be15fee635c5",
+      "titulo": "Quicksilver",
+      "autor": "Callie hart",
+      "ano": 1986,
+      "status": "Emprestado"
+    }
+  },
+  "usuarios": {
+    "4bd39709-0105-4986-adbc-9146d34ff814": {
+      "id": "4bd39709-0105-4986-adbc-9146d34ff814",
+      "nome": "Gregory"
+    },
+    "e23c04a9-10af-427d-b133-b33d5b597030": {
+      "id": "e23c04a9-10af-427d-b133-b33d5b597030",
+      "nome": "Nathan"
+    },
+    "2fb07e71-3320-4efe-bf0a-15024d6c01c8": {
+      "id": "2fb07e71-3320-4efe-bf0a-15024d6c01c8",
+      "nome": "Breno"
+    },
+    "d2723e78-dc25-4ac6-86ea-67fe398867b1": {
+      "id": "d2723e78-dc25-4ac6-86ea-67fe398867b1",
+      "nome": "Bruno"
+    }
+  },
+  "emprestimos": {
+    "9847a695-d446-4faf-af7c-9023ab635d40": {
+      "id_emprestimo": "9847a695-d446-4faf-af7c-9023ab635d40",
+      "id_livro": "f827cb49-6568-4c7c-8483-be15fee635c5",
+      "id_usuario": "4bd39709-0105-4986-adbc-9146d34ff814",
+      "data_emprestimo": "2025-11-06",
+      "data_devolucao": "2025-11-20",
+      "status": "Ativo"
+    },
+    "e0a16172-df7e-478c-8d79-5677d6efc74c": {
+      "id_emprestimo": "e0a16172-df7e-478c-8d79-5677d6efc74c",
+      "id_livro": "64b573f3-7cec-4e73-9162-e7d91cc9b0a9",
+      "id_usuario": "d2723e78-dc25-4ac6-86ea-67fe398867b1",
+      "data_emprestimo": "2025-11-06",
+      "data_devolucao": "2025-11-20",
+      "status": "Ativo"
+    },
+    "dc234ac0-44e6-4456-81ed-a1010d8d16d7": {
+      "id_emprestimo": "dc234ac0-44e6-4456-81ed-a1010d8d16d7",
+      "id_livro": "af957da6-d7eb-4efe-8f7d-26bed53d258d",
+      "id_usuario": "4bd39709-0105-4986-adbc-9146d34ff814",
+      "data_emprestimo": "2025-11-06",
+      "data_devolucao": "2025-11-20",
+      "status": "Ativo"
+    }
+  }
+}
